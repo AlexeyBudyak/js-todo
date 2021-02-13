@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+</head>
+
+<body>
+
+  <script>
+    function addTask(){
+      const count = ~~document.getElementById('counter').innerText + 1;
+      const task = document.getElementById('newTask').value;
+      document.getElementById('counter').innerText = count;
+      document.getElementById('newTask').value = 'Task #' + (count + 1);
+      document.getElementById('todos').innerHTML+=
+        (`<div id="task${count}"><button id="del${count}" onclick="remove(${count})">x</button> ${task}</div>`);
+    }
+    function insertS(str){
+      if(str.includes('<s>'))  return str;
+      let [a,b] = str.split('</div>');
+      return `<s>${a}</s></div>${b}`;
+    }
+    function remove(n){
+      document.getElementById('todos').innerHTML =
+        document.getElementById('todos').innerHTML
+        .split('n> ').map((el,i) => i !== n ? el : insertS(el)).join('n> ');
+    }
+  </script>
+
+  <h1>Simple JS Todo list</h1>
+  Number of tasks: <span id="counter">0</span><br><br>
+  <div id='todos'></div>
+  <input type="text" id="newTask" value="Task #1">
+  <button onclick="addTask()">add task</button>
+
+</body>
+
+</html>
